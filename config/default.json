@@ -1,3 +1,4 @@
 {
-	"mongoURI": "mongodb+srv://jenn1234:password1234@mern-social.c6kpj.mongodb.net/mern-social?retryWrites=true&w=majority"
+	"mongoURI": "mongodb+srv://jenn1234:password1234@mern-social.c6kpj.mongodb.net/mern-social?retryWrites=true&w=majority",
+	"jwtSecret": "mysecrettoken"
 }
