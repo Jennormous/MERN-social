@@ -1,17 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../../middleware/auth");
 const bcrypt = require("bcryptjs");
+const auth = require("../../middleware/auth");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-
 const { check, validationResult } = require("express-validator");
 
-const User = require("../../models/Users");
-// @route GET api/auth
-// @desc Test route
-// @access Public
+const User = require("../../models/User");
 
+// @route    GET api/auth
+// @desc     Get user by token
+// @access   Private
 router.get("/", auth, async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id).select("-password");
@@ -22,14 +21,13 @@ router.get("/", auth, async (req, res) => {
 	}
 });
 
-// @route POST api/users
-// @desc Authenticate user & get token
-// @access Public
-
+// @route    POST api/auth
+// @desc     Authenticate user & get token
+// @access   Public
 router.post(
 	"/",
 	[
-		check("email", "Please include valid email").isEmail(),
+		check("email", "Please include a valid email").isEmail(),
 		check("password", "Password is required").exists()
 	],
 	async (req, res) => {
@@ -41,7 +39,7 @@ router.post(
 		const { email, password } = req.body;
 
 		try {
-			let user = await Users.findOne({ email });
+			let user = await User.findOne({ email });
 
 			if (!user) {
 				return res
@@ -66,7 +64,7 @@ router.post(
 			jwt.sign(
 				payload,
 				config.get("jwtSecret"),
-				{ expiresIn: 360000 },
+				{ expiresIn: "5 days" },
 				(err, token) => {
 					if (err) throw err;
 					res.json({ token });
@@ -76,8 +74,6 @@ router.post(
 			console.error(err.message);
 			res.status(500).send("Server error");
 		}
-
-		// Return JSON webtoken
 	}
 );
 
