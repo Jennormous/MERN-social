@@ -1,4 +1,6 @@
 {
 	"mongoURI": "mongodb+srv://jenn1234:password1234@mern-social.c6kpj.mongodb.net/mern-social?retryWrites=true&w=majority",
-	"jwtSecret": "mysecrettoken"
+	"jwtSecret": "mysecrettoken",
+	"githubToken": "63eece4b4451be2b59a6644215036ecd95111acc"
+	//"githubToken": "39c59ad11a10d35096e8602daf3a5e8676e67687"
 }
